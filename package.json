@@ -1,0 +1,13 @@
+{
+  "name": "trialzombiegame",
+  "version": "1.0.0",
+  "private": true,
+  "description": "First-person walkable Forest House 3D map (three.js)",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
