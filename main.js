@@ -180,13 +180,29 @@ function onModelLoaded(gltf) {
   sun.shadow.bias = -0.0004;
   sc.updateProjectionMatrix();
 
-  // Spawn just outside the building footprint, on the ground, looking at the house.
-  const sx = center.x;
-  const sz = box.max.z + maxDim * 0.05;
-  let groundY = sampleGround(sx, sz, box.max.y + maxDim);
-  if (groundY === null) groundY = box.min.y;
-  spawn.pos.set(sx, groundY + P.eyeHeight, sz);
-  spawn.look.set(center.x, groundY + P.eyeHeight, center.z);
+  // Pick a spawn on the open ground on TOP of the terrain. We sample a grid of
+  // points (offset toward +Z from the centre) and keep the lowest topmost-hit,
+  // which is open ground rather than a tree canopy, a roof, or the bottom shell.
+  const aboveAll = box.max.y + maxDim; // ray start, safely above everything
+  const baseX = center.x;
+  const baseZ = center.z + size.z * 0.28;
+  let best = null;
+  for (let gx = -2; gx <= 2; gx++) {
+    for (let gz = -2; gz <= 2; gz++) {
+      const x = baseX + gx * size.x * 0.05;
+      const z = baseZ + gz * size.z * 0.05;
+      const y = sampleGround(x, z, aboveAll);       // topmost surface here
+      if (y === null) continue;
+      if (y < box.min.y + size.y * 0.05) continue;  // ignore the bottom shell
+      if (best === null || y < best.y) best = { x, z, y };
+    }
+  }
+  if (best === null) {
+    const y = sampleGround(center.x, center.z, aboveAll);
+    best = { x: center.x, z: center.z, y: y !== null ? y : box.min.y };
+  }
+  spawn.pos.set(best.x, best.y + P.eyeHeight, best.z);
+  spawn.look.set(center.x, best.y + P.eyeHeight, center.z);
 
   respawn();
   ready = true;
