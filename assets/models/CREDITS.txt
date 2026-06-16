@@ -1,15 +1,12 @@
 3D MAP ASSET CREDIT
 ===================
 
-The map currently loaded as assets/models/house_in_the_forest.glb is a
-placeholder/stand-in model used so the game is playable out of the box.
+assets/models/house_in_the_forest.glb
 
-This work is based on "Forest House"
-(https://sketchfab.com/3d-models/forest-house-5646e6a3c8834022a0e289465f0bbc5d)
-by Wesai (https://sketchfab.com/Wesai)
+This work is based on "House in the forest"
+(https://sketchfab.com/3d-models/house-in-the-forest-d9ec9271b2594cdaa39b85a95894d8b5)
+by katydid (https://sketchfab.com/Katydid.)
 licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/).
 
 License requirements: the author must be credited. Commercial use is allowed.
-
-If you replace this file with your own house_in_the_forest.glb, update or
-remove this credit accordingly.
+(Attribution metadata is also embedded in the .glb file's asset.extras.)

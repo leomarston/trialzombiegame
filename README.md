@@ -49,8 +49,8 @@ same name/path) and reload. Everything — movement speed, eye height, fog,
 shadows, and the spawn point — is scaled automatically to whatever model you
 load, so any reasonably-sized `.glb` will work.
 
-> The map currently in the repo is a small public stand-in
-> ("Forest House" by Wesai, CC-BY 4.0 — see `assets/models/CREDITS.txt`).
+> The bundled map is "House in the forest" by katydid, CC-BY 4.0
+> (see `assets/models/CREDITS.txt`).
 
 ## Project layout
 
