@@ -57,15 +57,24 @@
       border-radius: 7px; padding: 2px 8px; font-size: 12px; white-space: nowrap;
     }
     .keys .d { color: #c6d2dd; align-self: center; }
-    button#play {
+    button#play, button#again {
       appearance: none; border: 0; cursor: pointer;
       background: linear-gradient(180deg, #4f9bf5, #2f6fd6);
       color: white; font-size: 15px; font-weight: 600;
       padding: 12px 26px; border-radius: 10px;
       box-shadow: 0 8px 20px rgba(47,111,214,0.4);
     }
-    button#play:hover { filter: brightness(1.07); }
-    button#play[disabled] { opacity: 0.55; cursor: default; box-shadow: none; filter: grayscale(0.4); }
+    button#again { background: linear-gradient(180deg, #f56a6a, #d63030); box-shadow: 0 8px 20px rgba(214,48,48,0.4); }
+    button#play:hover, button#again:hover { filter: brightness(1.07); }
+
+    .tagline { font-size: 13.5px; color: #c8d4df; line-height: 1.5; margin: 2px 4px 16px; }
+    .tagline b { color: #ffe7a8; }
+    .tagline.big { font-size: 20px; color: #ff9a9a; margin: 6px 0 18px; }
+
+    #status {
+      font-weight: 700; letter-spacing: 0.5px; color: #8fe0a0;
+      border: 1px solid rgba(143,224,160,0.5); border-radius: 6px; padding: 1px 7px;
+    }
 
     /* Loading bar */
     #bar-wrap { height: 6px; width: 100%; background: rgba(255,255,255,0.08);
@@ -96,14 +105,14 @@
   <div id="crosshair"></div>
 
   <div id="hud">
-    Mode: <span id="mode">Walk</span> &nbsp;·&nbsp;
+    <span id="status">RUN</span> &nbsp;·&nbsp; Mode: <span id="mode">Walk</span> &nbsp;·&nbsp;
     <b>WASD</b> move &nbsp; <b>Mouse</b> look &nbsp; <b>Shift</b> run &nbsp; <b>Space</b> jump &nbsp; <b>F</b> fly &nbsp; <b>R</b> reset &nbsp; <b>Esc</b> release
   </div>
 
   <div id="overlay">
     <div class="card">
-      <h1>🌲 Forest House</h1>
-      <p class="sub" id="subtitle">Loading the map…</p>
+      <h1>🧟 Forest House — Survive</h1>
+      <p class="sub" id="subtitle">Loading…</p>
 
       <!-- Loading state -->
       <div id="loading">
@@ -113,17 +122,24 @@
 
       <!-- Ready state -->
       <div id="ready" class="hidden">
+        <p class="tagline">A zombie licker is hunting you. <b>Run</b>, and get inside the house —
+          the door opens as you approach. One touch and you're dead.</p>
         <div class="keys">
-          <span class="k">W A S D</span><span class="d">Walk around</span>
+          <span class="k">W A S D</span><span class="d">Move</span>
           <span class="k">Mouse</span><span class="d">Look</span>
-          <span class="k">Shift</span><span class="d">Run</span>
-          <span class="k">Space</span><span class="d">Jump (hold to ascend in fly)</span>
-          <span class="k">F</span><span class="d">Toggle fly / walk</span>
-          <span class="k">Q / E</span><span class="d">Down / Up (fly mode)</span>
-          <span class="k">R</span><span class="d">Reset to start</span>
+          <span class="k">Shift</span><span class="d">Run (you're faster than it — barely)</span>
+          <span class="k">Space</span><span class="d">Jump</span>
+          <span class="k">F</span><span class="d">Toggle fly (free explore)</span>
+          <span class="k">R</span><span class="d">Reset position</span>
           <span class="k">Esc</span><span class="d">Release mouse</span>
         </div>
-        <button id="play">Click to explore</button>
+        <button id="play">Click to play</button>
+      </div>
+
+      <!-- Game over state -->
+      <div id="gameover" class="hidden">
+        <p class="tagline big">💀 The licker caught you.</p>
+        <button id="again">Play again</button>
       </div>
 
       <!-- Error state -->
@@ -133,8 +149,10 @@
 
       <p class="credit">
         Map: <a href="https://sketchfab.com/3d-models/house-in-the-forest-d9ec9271b2594cdaa39b85a95894d8b5" target="_blank" rel="noopener">“House in the forest”</a>
-        by <a href="https://sketchfab.com/Katydid." target="_blank" rel="noopener">katydid</a>,
-        licensed <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY 4.0</a>.
+        by <a href="https://sketchfab.com/Katydid." target="_blank" rel="noopener">katydid</a> ·
+        Monster: <a href="https://sketchfab.com/3d-models/zombie-licker-2fd160ff6aa14b81aac2afe0690c67be" target="_blank" rel="noopener">“Zombie licker”</a>
+        by <a href="https://sketchfab.com/italianPie" target="_blank" rel="noopener">italianPie</a> ·
+        both <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY 4.0</a>.
       </p>
     </div>
   </div>

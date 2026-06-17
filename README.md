@@ -1,21 +1,35 @@
-# Forest House — walkable 3D map
+# Forest House — survival
 
-A tiny first-person viewer built with [Three.js](https://threejs.org/). It loads
-a `.glb` map and lets you **wander around it** with mouse-look and WASD — no build
-step, no dependencies to install at runtime (Three.js is vendored under `vendor/`).
+A first-person survival mini-game built with [Three.js](https://threejs.org/).
+You spawn in a forest diorama with a cabin. A **zombie licker hunts you** — run,
+and get inside the house (the front door swings open as you approach). One touch
+and it's game over; a **Play again** button restarts the run. No build step and
+no runtime dependencies (Three.js is vendored under `vendor/`).
 
 ## Controls
 
 | Key | Action |
 | --- | --- |
-| `W` `A` `S` `D` | Walk |
+| `W` `A` `S` `D` | Move |
 | Mouse | Look around |
-| `Shift` | Run |
-| `Space` | Jump (hold to ascend in fly mode) |
-| `F` | Toggle fly / walk mode |
+| `Shift` | Run (you're a touch faster than the zombie) |
+| `Space` | Jump |
+| `F` | Toggle fly mode (free exploration) |
 | `Q` / `E` | Down / Up (fly mode) |
-| `R` | Reset to the start position |
+| `R` | Reset position |
 | `Esc` | Release the mouse |
+
+## How it works
+
+- **The monster** (`zombie_licker.glb`, 18 animations) roars, then chases you on
+  the ground using its in-place gallop clip, turning to face you; when it reaches
+  you it lunges (attack clip) and you die.
+- **The player** is small and slow enough to be threatened — and slim enough to
+  fit through the doorway.
+- **The door** on the west gable opens/closes as you approach/leave. The house
+  has a real interior; a short virtual ramp at the threshold lets you walk up and
+  inside (the model's own door is fused into the walls, so a custom hinged door is
+  placed over the entrance).
 
 ## Run it locally
 
@@ -53,30 +67,26 @@ The site is also fully static, so it works on GitHub Pages: **Settings → Pages
 set the source to your branch and the root folder (`.nojekyll` is included so the
 `vendor/` files are served as-is). Railway is recommended since you asked for it.
 
-## Swapping in your own map
-
-The viewer always loads:
+## Assets & credits
 
 ```
-assets/models/house_in_the_forest.glb
+assets/models/house_in_the_forest.glb   # the map   — "House in the forest" by katydid
+assets/models/zombie_licker.glb          # the monster — "Zombie licker" by italianPie
 ```
 
-To use a different map, just replace that file with your own `.glb` (keep the
-same name/path) and reload. Everything — movement speed, eye height, fog,
-shadows, and the spawn point — is scaled automatically to whatever model you
-load, so any reasonably-sized `.glb` will work.
-
-> The bundled map is "House in the forest" by katydid, CC-BY 4.0
-> (see `assets/models/CREDITS.txt`).
+Both are CC-BY 4.0 — see `assets/models/CREDITS.txt`. The map's movement tuning,
+fog, shadows and spawn are scaled to its size; the door position is specific to
+this house model (see the `DOOR` constants in `main.js`).
 
 ## Project layout
 
 ```
 index.html                         # page, UI overlay, import map
-main.js                            # scene, controls, movement, model loading
+main.js                            # scene, player, zombie AI, doors, game loop
 server.js                          # zero-dependency static server (Railway / local)
 package.json                       # `npm start` -> node server.js
 railway.json                       # Railway build/deploy config
 assets/models/house_in_the_forest.glb   # the map
+assets/models/zombie_licker.glb          # the monster
 vendor/                            # vendored three.js (module + GLTFLoader + PointerLockControls)
 ```
